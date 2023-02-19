@@ -12,4 +12,5 @@
 
     <string name="hello_world_button">This is hello world butotn</string>
     <string name="hello_message">Hello cc</string>
+    <string name="title_activity_login">Login</string>
 </resources>
