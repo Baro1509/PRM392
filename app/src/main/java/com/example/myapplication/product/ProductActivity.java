@@ -72,16 +72,13 @@ public class ProductActivity extends AppCompatActivity {
 
     //TODO Remove this after get product from another source is implemented
     private Product mockProduct() {
+        String split = "_";
+        String images = "" + R.drawable.image1 + split + R.drawable.image2 + split + R.drawable.image3 + split + R.drawable.image4 + split + R.drawable.image5;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            image1: 2131165296
-//            image2: 2131165297
-//            image3: 2131165298
-//            image4: 2131165299
-//            image5: 2131165345
             return new Product(1,
                     "Product 1",
                     15f,
-                    "2131165345_2131165297_2131165298_2131165299",
+                    images,
                     LocalDateTime.now(),
                     "This is the product\n" +
                             "you have always wanted",
