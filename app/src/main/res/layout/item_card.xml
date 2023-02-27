@@ -1,31 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="6dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    >
 
-    <ImageView
-        android:id="@+id/itemImage"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:scaleType="centerCrop"
-        />
-    <TextView
-        android:id="@+id/itemName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iphone 14 ProMax"
-        android:textSize="26sp"
-        android:layout_marginTop="6dp"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/itemPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Iphone 14 ProMax"
-        android:textSize="26sp"
-        android:layout_marginTop="6dp"/>
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            />
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Iphone 14 ProMax"
+            android:textSize="26sp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Iphone 14 ProMax"
+            android:textSize="26sp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>
