@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-mergeDebugResources-36:\\layout\\activity_home.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-main-39:\\layout\\activity_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-mergeDebugResources-36:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-main-39:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.myapplication.app-mergeDebugResources-36:/layout/activity_verify_otp.xml",
+        "source": "com.example.myapplication.app-main-39:/layout/activity_verify_otp.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-mergeDebugResources-36:\\layout\\activity_send_otp.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-main-39:\\layout\\activity_send_otp.xml"
+    },
+    {
+        "merged": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-mergeDebugResources-36:\\layout\\activity_verify_otp.xml",
+        "source": "C:\\Users\\Admin\\.gradle\\daemon\\7.4\\com.example.myapplication.app-main-39:\\layout\\activity_verify_otp.xml"
+    }
+]
