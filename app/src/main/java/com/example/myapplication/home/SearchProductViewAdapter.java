@@ -1,6 +1,5 @@
 package com.example.myapplication.home;
 
-import android.media.Image;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +39,20 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.img.setImageResource(Integer.parseInt(Arrays.stream(product.getImages().split(separator))
+            holder.img.setImageResource(Arrays.stream(product.getImages().split(separator))
                     .map(Integer::parseInt)
-                    .collect(Collectors.toList()).get(0)));
+                    .collect(Collectors.toList()).get(0));
+            holder.productName.setText(product.getProductName());
+            holder.productPrice.setText(product.getPrice().toString());
         }
 
     }
 
     @Override
     public int getItemCount() {
+        if (searchProductList != null){
+            return searchProductList.size();
+        }
         return 0;
     }
 
@@ -56,11 +60,14 @@ public class SearchProductViewAdapter extends RecyclerView.Adapter<SearchProduct
         private ImageView img;
         private TextView productName;
         private TextView productPrice;
+
         public SearchProductViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.itemImage);
             productName = itemView.findViewById(R.id.itemName);
             productPrice = itemView.findViewById(R.id.itemPrice);
+
+
         }
     }
 }
