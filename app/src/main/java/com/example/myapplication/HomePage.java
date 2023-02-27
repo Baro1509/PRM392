@@ -1,47 +1,90 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
+import android.widget.Button;
 
-import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.databinding.HomePageBinding;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements View.OnClickListener {
 
-
-    HomePageBinding binding;
+    private  RecyclerView rcvProduct;
+    private Button btnPhone,btnLaptop,btnFurniture;
+    private GridLayoutManager grid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = HomePageBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.home_page);
 
-        int[] productImg = {R.drawable.chair, R.drawable.couch, R.drawable.dining_table, R.drawable.iphone1, R.drawable.mac};
+        btnPhone = findViewById(R.id.phoneBtn);
+        btnLaptop = findViewById(R.id.laptopBtn);
+        btnFurniture = findViewById(R.id.furniBtn);
+        rcvProduct = findViewById(R.id.rcv_product);
 
-        String[] productName = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-        int[] productPrice = {1000,2000,3000,4000,5000};
-
-        GridAdapter gridAdapter;
-        gridAdapter = new GridAdapter(HomePage.this, productImg, productName, productPrice);
-
-        binding.productList.setAdapter(gridAdapter);
+        grid = new GridLayoutManager(this, 2);
+        rcvProduct.setLayoutManager(grid);
+        ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(getProductList());
+        rcvProduct.setAdapter(productListViewAdapter);
 
 
-        binding.productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent,
-                                    View view,
-                                    int position,
-                                    long l) {
-                Toast.makeText(HomePage.this,"Clicked on " + productName[position],Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnPhone.setOnClickListener(this);
+        btnLaptop.setOnClickListener(this);
+        btnFurniture.setOnClickListener(this);
+    }
 
+    private List<Product> getProductList() {
+        List<Product> productList = new ArrayList<>();
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
+
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
+
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
+
+        return productList;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.phoneBtn:
+                scrollToItem(0);
+                break;
+            case R.id.laptopBtn:
+                scrollToItem(7);
+                break;
+            case R.id.furniBtn:
+                scrollToItem(14);
+                break;
+        }
+    }
+
+    private void scrollToItem(int index) {
+        if (grid == null){
+            return;
+        }
+        grid.scrollToPositionWithOffset(index,0);
     }
 }
