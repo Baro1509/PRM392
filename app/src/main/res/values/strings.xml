@@ -10,6 +10,9 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="buy_now">Buy now</string>
     <string name="back_to_home">Back to Home</string>
+    <string name="checkout">Checkout</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="order">Order</string>
 
     <string name="title_activity_login">Login</string>
 </resources>
