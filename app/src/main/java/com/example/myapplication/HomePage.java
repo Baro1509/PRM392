@@ -1,19 +1,12 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.Toast;
-
-import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.databinding.HomePageBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +29,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
         grid = new GridLayoutManager(this, 2);
         rcvProduct.setLayoutManager(grid);
-        Adapter adapter = new Adapter(getProductList());
-        rcvProduct.setAdapter(adapter);
+        ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(getProductList());
+        rcvProduct.setAdapter(productListViewAdapter);
 
 
         btnPhone.setOnClickListener(this);

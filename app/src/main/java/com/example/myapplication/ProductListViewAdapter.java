@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder>
+public class ProductListViewAdapter extends RecyclerView.Adapter<ProductListViewAdapter.ProductViewHolder>
 {
     private List<Product> productList;
 
-    public Adapter(List<Product> productList) {
+    public ProductListViewAdapter(List<Product> productList) {
         this.productList = productList;
     }
 
