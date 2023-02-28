@@ -18,7 +18,7 @@ import java.util.List;
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
 
     private  RecyclerView rcvProduct;
-    private Button btnPhone,btnLaptop,btnFurniture;
+    private Button btnPhone,btnLaptop,btnFurniture,btnAdd;
     private GridLayoutManager grid;
     private EditText searchBar;
 
@@ -36,10 +36,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 openSearchPage();
             }
         });
+        
 
         btnPhone = findViewById(R.id.phoneBtn);
         btnLaptop = findViewById(R.id.laptopBtn);
         btnFurniture = findViewById(R.id.furniBtn);
+        btnAdd = findViewById(R.id.btnAdd);
         rcvProduct = findViewById(R.id.rcv_product);
 
         grid = new GridLayoutManager(this, 2);
@@ -47,10 +49,20 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(getProductList());
         rcvProduct.setAdapter(productListViewAdapter);
 
-
         btnPhone.setOnClickListener(this);
         btnLaptop.setOnClickListener(this);
         btnFurniture.setOnClickListener(this);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCart();
+            }
+        });
+    }
+
+    public void openCart() {
+        Intent intent = new Intent(this,ViewCart.class );
+        startActivity(intent);
     }
 
     public void openSearchPage(){
@@ -97,6 +109,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.furniBtn:
                 scrollToItem(14);
+                break;
+            case R.id.btnAdd:
+
                 break;
         }
     }
