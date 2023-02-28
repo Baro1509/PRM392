@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.myapplication.home.SearchProduct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +20,22 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     private  RecyclerView rcvProduct;
     private Button btnPhone,btnLaptop,btnFurniture,btnAdd;
     private GridLayoutManager grid;
+    private EditText searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+
+
+        searchBar = findViewById(R.id.searchBar);
+
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSearchPage();
+            }
+        });
 
         btnPhone = findViewById(R.id.phoneBtn);
         btnLaptop = findViewById(R.id.laptopBtn);
@@ -47,6 +61,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
     public void openCart() {
         Intent intent = new Intent(this,ViewCart.class );
+        startActivity(intent);
+    }
+
+    public void openSearchPage(){
+        Intent intent = new Intent(HomePage.this, SearchProduct.class);
         startActivity(intent);
     }
 

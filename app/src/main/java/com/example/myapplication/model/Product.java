@@ -51,6 +51,12 @@ public class Product implements Parcelable {
         category = in.readParcelable(Category.class.getClassLoader());
     }
 
+    public Product(String images, String productName, float price) {
+        this.images = images;
+        this.productName = productName;
+        this.price = price;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (productId == null) {
