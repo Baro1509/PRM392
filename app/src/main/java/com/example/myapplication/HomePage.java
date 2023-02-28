@@ -36,6 +36,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 openSearchPage();
             }
         });
+        
 
         btnPhone = findViewById(R.id.phoneBtn);
         btnLaptop = findViewById(R.id.laptopBtn);
