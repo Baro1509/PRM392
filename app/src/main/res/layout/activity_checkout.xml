@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/checkoutTopNav"
-        layout="@layout/checkout_top_nav"
+        layout="@layout/go_back_top_nav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

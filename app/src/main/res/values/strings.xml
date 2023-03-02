@@ -16,4 +16,8 @@
     <string name="order_history">Order History</string>
 
     <string name="title_activity_login">Login</string>
+
+    <!--    Message-->
+    <string name="empty_order_history">You have not purchased anything</string>
+    <string name="empty_order_history_suggestion">Maybe try buying something</string>
 </resources>

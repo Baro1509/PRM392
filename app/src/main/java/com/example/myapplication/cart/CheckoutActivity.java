@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.Brand;
@@ -17,13 +18,21 @@ import java.util.List;
 
 public class CheckoutActivity extends AppCompatActivity {
     RecyclerView checkoutProductList;
+    TextView topnav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+        setupUI();
+    }
+
+    private void setupUI() {
         checkoutProductList = (RecyclerView) findViewById(R.id.checkoutProductList);
+        topnav = (TextView) findViewById(R.id.titleTopNav);
+
+        topnav.setText("Checkout");
         CheckoutProductListAdapter adapter = new CheckoutProductListAdapter(this, mockProducts());
         checkoutProductList.setAdapter(adapter);
         checkoutProductList.setLayoutManager(new LinearLayoutManager(this));
