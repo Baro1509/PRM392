@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +42,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     @Override
     public void onBindViewHolder(@NonNull OrderListViewHolder holder, int position) {
         Order order = orders.get(position);
-
         holder.orderId.setText(orderId + order.getOrderId());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             holder.shipmentDate.setText(shipmentDate + order.getShipmentDate().toLocalDate());
@@ -58,6 +58,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
     public class OrderListViewHolder extends RecyclerView.ViewHolder {
         TextView orderId, shipmentDate, status, amount, price;
+
         public OrderListViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,6 +67,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             status = itemView.findViewById(R.id.orderListOrderStatus);
             amount = itemView.findViewById(R.id.orderListTotalAmount);
             price = itemView.findViewById(R.id.orderListTotalPrice);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = orders.get(getAdapterPosition()).getOrderId().toString();
+                    Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
