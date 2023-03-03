@@ -81,7 +81,6 @@ public class OrderActivity extends AppCompatActivity {
             return new Order(ThreadLocalRandom.current().nextInt(0, 100),
                     null,
                     null,
-                    null,
                     "Arrived",
                     LocalDateTime.now(),
                     LocalDateTime.now(),

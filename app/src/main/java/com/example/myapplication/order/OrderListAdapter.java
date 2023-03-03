@@ -47,8 +47,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             holder.shipmentDate.setText(shipmentDate + order.getShipmentDate().toLocalDate());
         }
         holder.status.setText(status + order.getOrderStatus());
-        holder.amount.setText(amount + order.getTotalAmount());
-        holder.price.setText(price + order.getTotalPrice());
+        holder.amount.setText(amount + order.getTotalAmount().toString());
+        holder.price.setText(price + order.getTotalPrice().toString());
     }
 
     @Override

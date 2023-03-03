@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class Order implements Parcelable {
     private Integer orderId;
     private Customer customer;
-    private Store store;
     private Staff staff;
     private String orderStatus;
     private LocalDateTime orderDate;
@@ -17,10 +16,9 @@ public class Order implements Parcelable {
     private Float totalPrice;
     private Integer totalAmount;
 
-    public Order(Integer orderId, Customer customer, Store store, Staff staff, String orderStatus, LocalDateTime orderDate, LocalDateTime payDate, LocalDateTime shipmentDate, Float totalPrice, Integer totalAmount) {
+    public Order(Integer orderId, Customer customer, Staff staff, String orderStatus, LocalDateTime orderDate, LocalDateTime payDate, LocalDateTime shipmentDate, Float totalPrice, Integer totalAmount) {
         this.orderId = orderId;
         this.customer = customer;
-        this.store = store;
         this.staff = staff;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
@@ -37,7 +35,6 @@ public class Order implements Parcelable {
             orderId = in.readInt();
         }
         customer = in.readParcelable(Customer.class.getClassLoader());
-        store = in.readParcelable(Store.class.getClassLoader());
         staff = in.readParcelable(Staff.class.getClassLoader());
         orderStatus = in.readString();
         if (in.readByte() == 0) {
@@ -61,7 +58,6 @@ public class Order implements Parcelable {
             dest.writeInt(orderId);
         }
         dest.writeParcelable(customer, flags);
-        dest.writeParcelable(store, flags);
         dest.writeParcelable(staff, flags);
         dest.writeString(orderStatus);
         if (totalPrice == null) {
@@ -109,14 +105,6 @@ public class Order implements Parcelable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
     }
 
     public Staff getStaff() {
