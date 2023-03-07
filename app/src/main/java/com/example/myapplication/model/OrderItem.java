@@ -4,21 +4,44 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class OrderItem implements Parcelable {
-    private Order order;
-    private Product product;
+    private Integer orderItemId;
+    private Integer orderId;
+    private Integer productId;
+    private String productName;
+    private String images;
     private Float price;
     private Integer amount;
+    private Store store;
 
-    public OrderItem(Order order, Product product, Float price, Integer amount) {
-        this.order = order;
-        this.product = product;
+    public OrderItem(Integer orderItemId, Integer orderId, Integer productId, String productName, String images, Float price, Integer amount, Store store) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.productName = productName;
+        this.images = images;
         this.price = price;
         this.amount = amount;
+        this.store = store;
     }
 
     protected OrderItem(Parcel in) {
-        order = in.readParcelable(Order.class.getClassLoader());
-        product = in.readParcelable(Product.class.getClassLoader());
+        if (in.readByte() == 0) {
+            orderItemId = null;
+        } else {
+            orderItemId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            orderId = null;
+        } else {
+            orderId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            productId = null;
+        } else {
+            productId = in.readInt();
+        }
+        productName = in.readString();
+        images = in.readString();
         if (in.readByte() == 0) {
             price = null;
         } else {
@@ -29,12 +52,31 @@ public class OrderItem implements Parcelable {
         } else {
             amount = in.readInt();
         }
+        store = in.readParcelable(Store.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(order, flags);
-        dest.writeParcelable(product, flags);
+        if (orderItemId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(orderItemId);
+        }
+        if (orderId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(orderId);
+        }
+        if (productId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(productId);
+        }
+        dest.writeString(productName);
+        dest.writeString(images);
         if (price == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -47,6 +89,7 @@ public class OrderItem implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(amount);
         }
+        dest.writeParcelable(store, flags);
     }
 
     @Override
@@ -66,20 +109,44 @@ public class OrderItem implements Parcelable {
         }
     };
 
-    public Order getOrder() {
-        return order;
+    public Integer getOrderItemId() {
+        return orderItemId;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderItemId(Integer orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
-    public Product getProduct() {
-        return product;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     public Float getPrice() {
@@ -96,5 +163,13 @@ public class OrderItem implements Parcelable {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }
