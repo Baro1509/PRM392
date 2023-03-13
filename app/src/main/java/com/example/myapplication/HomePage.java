@@ -2,10 +2,13 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.network.RetrofitClient;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +34,13 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     private GridLayoutManager grid;
     private EditText searchBar;
 
+    List<Product> products;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+        products = new ArrayList<>();
 
 
         searchBar = findViewById(R.id.searchBar);
@@ -52,10 +59,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         btnAdd = findViewById(R.id.btnAdd);
         rcvProduct = findViewById(R.id.rcv_product);
 
+        getProductListFromAPI();
+
         grid = new GridLayoutManager(this, 2);
         rcvProduct.setLayoutManager(grid);
-        ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(getProductList());
-        rcvProduct.setAdapter(productListViewAdapter);
+
 
         btnPhone.setOnClickListener(this);
         btnLaptop.setOnClickListener(this);
@@ -78,26 +86,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         startActivity(intent);
     }
 
-    private List<Product> getProductList() {
-        return ((GlobalVariables) this.getApplication()).getProducts();
-    }
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.phoneBtn:
-                scrollToItem(0);
-                break;
-            case R.id.laptopBtn:
-                scrollToItem(7);
-                break;
-            case R.id.furniBtn:
-                scrollToItem(14);
-                break;
-            case R.id.btnAdd:
-
-                break;
-        }
+        Toast.makeText(getApplicationContext(), "CLick", Toast.LENGTH_SHORT).show();
     }
 
     private void scrollToItem(int index) {
@@ -116,7 +107,10 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 for (Product p : list) {
                     setupProduct(p);
                 }
-                updateProductList(list);
+                products = list;
+                ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(products);
+                rcvProduct.setLayoutManager(new LinearLayoutManager(HomePage.this));
+                rcvProduct.setAdapter(productListViewAdapter);
             }
 
             @Override
@@ -126,11 +120,10 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
-    private void updateProductList(List<Product> list) {
-        ((GlobalVariables) this.getApplication()).setProducts(list);
-    }
-
     private void setupProduct(Product product) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            product.setModelYear(LocalDateTime.now());
+        }
         product.setImages(String.valueOf(R.drawable.chair));
         product.setBrand(new Brand(1, "Cong thai hoc"));
         product.setCategory(new Category(1, "Furniture"));

@@ -1,6 +1,8 @@
 package com.example.myapplication.network;
 
 import com.example.myapplication.model.Product;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -8,7 +10,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface Api {
-    String BASE_URL = "https://63e21cf8ad0093bf29c7f516.mockapi.io/baro/v1/";
-    @GET("Product")
+    String BASE_URL = "https://640f344e4ed25579dc48ebbc.mockapi.io/";
+//    String BASE_URL = "http://demo8940942.mockable.io/";
+    @GET("products")
     Call<List<Product>> getProducts();
 }
