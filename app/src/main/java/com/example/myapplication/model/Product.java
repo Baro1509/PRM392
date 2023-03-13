@@ -3,15 +3,23 @@ package com.example.myapplication.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDateTime;
 
 public class Product implements Parcelable {
+    @SerializedName("id")
     private Integer productId;
+    @SerializedName("name")
     private String productName;
+    @SerializedName("price")
     private Float price;
     private String images;
+    @SerializedName("modelyear")
     private LocalDateTime modelYear;
+    @SerializedName("description")
     private String description;
+    @SerializedName("stock")
     private Integer stock;
     private Brand brand;
     private Category category;

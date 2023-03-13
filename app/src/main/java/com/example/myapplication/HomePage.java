@@ -9,15 +9,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication.home.SearchProduct;
+import com.example.myapplication.model.Brand;
+import com.example.myapplication.model.Category;
+import com.example.myapplication.model.Product;
+import com.example.myapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements View.OnClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private  RecyclerView rcvProduct;
+public class HomePage extends AppCompatActivity implements View.OnClickListener {
+    private RecyclerView rcvProduct;
     private Button btnPhone,btnLaptop,btnFurniture,btnAdd;
     private GridLayoutManager grid;
     private EditText searchBar;
@@ -71,31 +79,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     }
 
     private List<Product> getProductList() {
-        List<Product> productList = new ArrayList<>();
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-
-        return productList;
+        return ((GlobalVariables) this.getApplication()).getProducts();
     }
 
     @Override
@@ -121,5 +105,34 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
             return;
         }
         grid.scrollToPositionWithOffset(index,0);
+    }
+
+    private void getProductListFromAPI() {
+        Call<List<Product>> call = RetrofitClient.getInstance().getApi().getProducts();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> list = response.body();
+                for (Product p : list) {
+                    setupProduct(p);
+                }
+                updateProductList(list);
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateProductList(List<Product> list) {
+        ((GlobalVariables) this.getApplication()).setProducts(list);
+    }
+
+    private void setupProduct(Product product) {
+        product.setImages(String.valueOf(R.drawable.chair));
+        product.setBrand(new Brand(1, "Cong thai hoc"));
+        product.setCategory(new Category(1, "Furniture"));
     }
 }

@@ -24,6 +24,10 @@ public class Customer implements Parcelable {
         this.customerZipCode = customerZipCode;
     }
 
+    public Customer() {
+
+    }
+
     protected Customer(Parcel in) {
         if (in.readByte() == 0) {
             customerId = null;
