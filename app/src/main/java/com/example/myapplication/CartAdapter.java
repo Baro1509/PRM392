@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.Product;
+
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder>{
@@ -40,7 +42,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
             return;
         }
 
-        holder.img.setImageResource(product.getImage());
+        holder.img.setImageResource(R.drawable.chair);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getPrice().toString());
     }

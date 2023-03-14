@@ -5,27 +5,41 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication.home.SearchProduct;
+import com.example.myapplication.model.Brand;
+import com.example.myapplication.model.Category;
+import com.example.myapplication.model.Product;
+import com.example.myapplication.network.RetrofitClient;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements View.OnClickListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    private  RecyclerView rcvProduct;
+public class HomePage extends AppCompatActivity implements View.OnClickListener {
+    private RecyclerView rcvProduct;
     private Button btnPhone,btnLaptop,btnFurniture,btnAdd;
     private GridLayoutManager grid;
     private EditText searchBar;
+
+    ProductListViewAdapter productListViewAdapter;
+    List<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+        products = new ArrayList<>();
 
 
         searchBar = findViewById(R.id.searchBar);
@@ -44,10 +58,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         btnAdd = findViewById(R.id.btnAdd);
         rcvProduct = findViewById(R.id.rcv_product);
 
+        getProductListFromAPI();
+        productListViewAdapter = new ProductListViewAdapter(products);
+        rcvProduct.setAdapter(productListViewAdapter);
         grid = new GridLayoutManager(this, 2);
         rcvProduct.setLayoutManager(grid);
-        ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(getProductList());
-        rcvProduct.setAdapter(productListViewAdapter);
+
 
         btnPhone.setOnClickListener(this);
         btnLaptop.setOnClickListener(this);
@@ -60,6 +76,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void openCart() {
         Intent intent = new Intent(this,ViewCart.class );
         startActivity(intent);
@@ -70,50 +91,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         startActivity(intent);
     }
 
-    private List<Product> getProductList() {
-        List<Product> productList = new ArrayList<>();
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-        productList.add(new Product(R.drawable.iphone1,"Iphone",1000.0f,Product.TYPE_PHONE));
-
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-        productList.add(new Product(R.drawable.mac,"Macbook Air",9999.0f,Product.TYPE_LAPTOP));
-
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-        productList.add(new Product(R.drawable.chair,"Nice chair",200.0f,Product.TYPE_FURNITURE));
-
-        return productList;
-    }
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.phoneBtn:
-                scrollToItem(0);
-                break;
-            case R.id.laptopBtn:
-                scrollToItem(7);
-                break;
-            case R.id.furniBtn:
-                scrollToItem(14);
-                break;
-            case R.id.btnAdd:
-
-                break;
-        }
+        Toast.makeText(getApplicationContext(), "CLick", Toast.LENGTH_SHORT).show();
     }
 
     private void scrollToItem(int index) {
@@ -121,5 +101,35 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
             return;
         }
         grid.scrollToPositionWithOffset(index,0);
+    }
+
+    private void getProductListFromAPI() {
+        Call<List<Product>> call = RetrofitClient.getInstance().getApi().getProducts();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                List<Product> list = response.body();
+                for (Product p : list) {
+                    setupProduct(p);
+                }
+                products = list;
+                productListViewAdapter.update(products);
+                productListViewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupProduct(Product product) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            product.setModelYear(LocalDateTime.now());
+        }
+        product.setImages(String.valueOf(R.drawable.chair));
+        product.setBrand(new Brand(1, "Cong thai hoc"));
+        product.setCategory(new Category(1, "Furniture"));
     }
 }

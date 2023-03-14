@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.myapplication.model.Product;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +19,10 @@ public class ProductListViewAdapter extends RecyclerView.Adapter<ProductListView
 
     public ProductListViewAdapter(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public void update(List<Product> list) {
+        this.productList = list;
     }
 
     @NonNull
@@ -33,7 +39,7 @@ public class ProductListViewAdapter extends RecyclerView.Adapter<ProductListView
             return;
         }
 
-        holder.img.setImageResource(product.getImage());
+        holder.img.setImageResource(R.drawable.chair);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getPrice().toString());
     }
