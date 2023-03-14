@@ -15,6 +15,7 @@ public class Product implements Parcelable {
     @SerializedName("price")
     private Float price;
     private String images;
+    @SerializedName("modelyear")
     private LocalDateTime modelYear;
     @SerializedName("description")
     private String description;

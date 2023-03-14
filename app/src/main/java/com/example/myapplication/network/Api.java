@@ -1,6 +1,7 @@
 package com.example.myapplication.network;
 
 import com.example.myapplication.model.Product;
+import com.example.myapplication.request.ProductRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,4 +15,7 @@ public interface Api {
 //    String BASE_URL = "http://demo8940942.mockable.io/";
     @GET("products")
     Call<List<Product>> getProducts();
+
+    @GET("product")
+    Call<List<ProductRequest>> getProduct();
 }

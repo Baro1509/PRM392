@@ -2,13 +2,11 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +32,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     private GridLayoutManager grid;
     private EditText searchBar;
 
+    ProductListViewAdapter productListViewAdapter;
     List<Product> products;
 
     @Override
@@ -60,7 +59,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         rcvProduct = findViewById(R.id.rcv_product);
 
         getProductListFromAPI();
-
+        productListViewAdapter = new ProductListViewAdapter(products);
+        rcvProduct.setAdapter(productListViewAdapter);
         grid = new GridLayoutManager(this, 2);
         rcvProduct.setLayoutManager(grid);
 
@@ -74,6 +74,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 openCart();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void openCart() {
@@ -108,9 +113,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                     setupProduct(p);
                 }
                 products = list;
-                ProductListViewAdapter productListViewAdapter = new ProductListViewAdapter(products);
-                rcvProduct.setLayoutManager(new LinearLayoutManager(HomePage.this));
-                rcvProduct.setAdapter(productListViewAdapter);
+                productListViewAdapter.update(products);
+                productListViewAdapter.notifyDataSetChanged();
             }
 
             @Override
