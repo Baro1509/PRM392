@@ -1,9 +1,6 @@
 package com.example.myapplication.network;
 
 import com.example.myapplication.model.Product;
-import com.example.myapplication.request.ProductRequest;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -16,6 +13,4 @@ public interface Api {
     @GET("products")
     Call<List<Product>> getProducts();
 
-    @GET("product")
-    Call<List<ProductRequest>> getProduct();
 }

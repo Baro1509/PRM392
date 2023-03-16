@@ -33,13 +33,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
     private EditText searchBar;
 
     ProductListViewAdapter productListViewAdapter;
-    List<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
-        products = new ArrayList<>();
 
 
         searchBar = findViewById(R.id.searchBar);
@@ -59,7 +57,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         rcvProduct = findViewById(R.id.rcv_product);
 
         getProductListFromAPI();
-        productListViewAdapter = new ProductListViewAdapter(products);
+        productListViewAdapter = new ProductListViewAdapter(new ArrayList<>());
         rcvProduct.setAdapter(productListViewAdapter);
         grid = new GridLayoutManager(this, 2);
         rcvProduct.setLayoutManager(grid);
@@ -112,8 +110,8 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 for (Product p : list) {
                     setupProduct(p);
                 }
-                products = list;
-                productListViewAdapter.update(products);
+                productListViewAdapter.update(list);
+                ((GlobalVariables) HomePage.this.getApplication()).setProducts(list);
                 productListViewAdapter.notifyDataSetChanged();
             }
 
