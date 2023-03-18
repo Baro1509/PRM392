@@ -12,8 +12,10 @@ public class Store implements Parcelable {
     private String storeCity;
     private String storeState;
     private String storeZipCode;
+    private Integer storeImage;
+    private Integer storeProducts;
 
-    public Store(Integer storeId, String storeName, String storePhone, String storeEmail, String storeStreet, String storeCity, String storeState, String storeZipCode) {
+    public Store(Integer storeId, String storeName, String storePhone, String storeEmail, String storeStreet, String storeCity, String storeState, String storeZipCode, Integer storeImage, Integer storeProducts) {
         this.storeId = storeId;
         this.storeName = storeName;
         this.storePhone = storePhone;
@@ -22,56 +24,9 @@ public class Store implements Parcelable {
         this.storeCity = storeCity;
         this.storeState = storeState;
         this.storeZipCode = storeZipCode;
+        this.storeImage = storeImage;
+        this.storeProducts = storeProducts;
     }
-
-    protected Store(Parcel in) {
-        if (in.readByte() == 0) {
-            storeId = null;
-        } else {
-            storeId = in.readInt();
-        }
-        storeName = in.readString();
-        storePhone = in.readString();
-        storeEmail = in.readString();
-        storeStreet = in.readString();
-        storeCity = in.readString();
-        storeState = in.readString();
-        storeZipCode = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (storeId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(storeId);
-        }
-        dest.writeString(storeName);
-        dest.writeString(storePhone);
-        dest.writeString(storeEmail);
-        dest.writeString(storeStreet);
-        dest.writeString(storeCity);
-        dest.writeString(storeState);
-        dest.writeString(storeZipCode);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Store> CREATOR = new Creator<Store>() {
-        @Override
-        public Store createFromParcel(Parcel in) {
-            return new Store(in);
-        }
-
-        @Override
-        public Store[] newArray(int size) {
-            return new Store[size];
-        }
-    };
 
     public Integer getStoreId() {
         return storeId;
@@ -136,4 +91,91 @@ public class Store implements Parcelable {
     public void setStoreZipCode(String storeZipCode) {
         this.storeZipCode = storeZipCode;
     }
+
+    public Integer getStoreImage() {
+        return storeImage;
+    }
+
+    public void setStoreImage(Integer storeImage) {
+        this.storeImage = storeImage;
+    }
+
+    public Integer getStoreProducts() {
+        return storeProducts;
+    }
+
+    public void setStoreProducts(Integer storeProducts) {
+        this.storeProducts = storeProducts;
+    }
+
+    protected Store(Parcel in) {
+        if (in.readByte() == 0) {
+            storeId = null;
+        } else {
+            storeId = in.readInt();
+        }
+        storeName = in.readString();
+        storePhone = in.readString();
+        storeEmail = in.readString();
+        storeStreet = in.readString();
+        storeCity = in.readString();
+        storeState = in.readString();
+        storeZipCode = in.readString();
+        if (in.readByte() == 0) {
+            storeImage = null;
+        } else {
+            storeImage = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            storeProducts = null;
+        } else {
+            storeProducts = in.readInt();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (storeId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(storeId);
+        }
+        dest.writeString(storeName);
+        dest.writeString(storePhone);
+        dest.writeString(storeEmail);
+        dest.writeString(storeStreet);
+        dest.writeString(storeCity);
+        dest.writeString(storeState);
+        dest.writeString(storeZipCode);
+        if (storeImage == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(storeImage);
+        }
+        if (storeProducts == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(storeProducts);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Store> CREATOR = new Creator<Store>() {
+        @Override
+        public Store createFromParcel(Parcel in) {
+            return new Store(in);
+        }
+
+        @Override
+        public Store[] newArray(int size) {
+            return new Store[size];
+        }
+    };
 }
