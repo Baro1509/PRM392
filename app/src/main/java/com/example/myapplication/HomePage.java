@@ -21,6 +21,7 @@ import com.example.myapplication.network.RetrofitClient;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,30 +40,30 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
 
+        bindView();
+        setupOnclick();
+        setupListView();
 
+        ((GlobalVariables) this.getApplication()).setupData();
+        getProductListFromAPI();
+    }
+
+    private void bindView() {
         searchBar = findViewById(R.id.searchBar);
+        btnPhone = findViewById(R.id.phoneBtn);
+        btnLaptop = findViewById(R.id.laptopBtn);
+        btnFurniture = findViewById(R.id.furniBtn);
+        btnAdd = findViewById(R.id.btnAdd);
+        rcvProduct = findViewById(R.id.rcv_product);
+    }
 
+    private void setupOnclick() {
         searchBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openSearchPage();
             }
         });
-        
-
-        btnPhone = findViewById(R.id.phoneBtn);
-        btnLaptop = findViewById(R.id.laptopBtn);
-        btnFurniture = findViewById(R.id.furniBtn);
-        btnAdd = findViewById(R.id.btnAdd);
-        rcvProduct = findViewById(R.id.rcv_product);
-
-        getProductListFromAPI();
-        productListViewAdapter = new ProductListViewAdapter(new ArrayList<>());
-        rcvProduct.setAdapter(productListViewAdapter);
-        grid = new GridLayoutManager(this, 2);
-        rcvProduct.setLayoutManager(grid);
-
-
         btnPhone.setOnClickListener(this);
         btnLaptop.setOnClickListener(this);
         btnFurniture.setOnClickListener(this);
@@ -72,6 +73,13 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 openCart();
             }
         });
+    }
+
+    private void setupListView() {
+        productListViewAdapter = new ProductListViewAdapter(new ArrayList<>());
+        rcvProduct.setAdapter(productListViewAdapter);
+        grid = new GridLayoutManager(this, 2);
+        rcvProduct.setLayoutManager(grid);
     }
 
     @Override
@@ -91,7 +99,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(getApplicationContext(), "CLick", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "the thing", Toast.LENGTH_SHORT).show();
     }
 
     private void scrollToItem(int index) {
@@ -117,6 +125,7 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                getProductListFromAPI();
                 Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
             }
         });
@@ -127,7 +136,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
             product.setModelYear(LocalDateTime.now());
         }
         product.setImages(String.valueOf(R.drawable.chair));
-        product.setBrand(new Brand(1, "Cong thai hoc"));
-        product.setCategory(new Category(1, "Furniture"));
+//        product.setBrand(new Brand(1, "Cong thai hoc"));
+//        product.setCategory(new Category(1, "Furniture"));
+        product.setBrand(((GlobalVariables) this.getApplication()).getBrands().get(new Random().nextInt(((GlobalVariables) this.getApplication()).getBrands().size())));
+        product.setCategory(((GlobalVariables) this.getApplication()).getCategories().get(new Random().nextInt(((GlobalVariables) this.getApplication()).getCategories().size())));
     }
 }

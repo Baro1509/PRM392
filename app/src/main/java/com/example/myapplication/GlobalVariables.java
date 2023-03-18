@@ -32,7 +32,7 @@ public class GlobalVariables extends Application {
         orderItems = new ArrayList<>();
         stores = new ArrayList<>();
         cart = new Cart();
-        customer = new Customer();
+        customer = null;
     }
 
     public List<Product> getProducts() {
@@ -97,5 +97,37 @@ public class GlobalVariables extends Application {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void setupData() {
+        setupBrands();
+        setupCategories();
+        setupStore();
+    }
+
+    private void setupBrands() {
+        brands.add(new Brand(1, "Samsung"));
+        brands.add(new Brand(2, "Huawei"));
+        brands.add(new Brand(3, "Xiaomi"));
+        brands.add(new Brand(4, "Nike"));
+    }
+
+    private void setupCategories() {
+        categories.add(new Category(1, "Chair"));
+        categories.add(new Category(2, "Phone"));
+        categories.add(new Category(3, "Table"));
+        categories.add(new Category(4, "Speaker"));
+        categories.add(new Category(5, "Laptop"));
+        categories.add(new Category(6, "Mouse"));
+        categories.add(new Category(7, "Keyboard"));
+    }
+
+    private void setupStore() {
+        stores.add(new Store(1, "Samsung Official Store VN",
+                "0808987654", "samsung@store.vn",
+                "1 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456"));
+        stores.add(new Store(2, "Xiaomi Off.",
+                "0902020202", "xiaomi@store.vn",
+                "2 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456"));
     }
 }

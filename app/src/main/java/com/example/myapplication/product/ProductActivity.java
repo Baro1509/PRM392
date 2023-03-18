@@ -3,9 +3,11 @@ package com.example.myapplication.product;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.example.myapplication.GlobalVariables;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Brand;
 import com.example.myapplication.model.Category;
@@ -41,8 +43,7 @@ public class ProductActivity extends AppCompatActivity {
         if (listImages == null) {
             listImages = new ArrayList<>();
         }
-        int abc = R.drawable.image5;
-        product = mockProduct();
+        product = getProductFromIntent();
     }
 
     private void setupUI() {
@@ -70,22 +71,12 @@ public class ProductActivity extends AppCompatActivity {
         });
     }
 
-    //TODO Remove this after get product from another source is implemented
-    private Product mockProduct() {
-        String split = "_";
-        String images = "" + R.drawable.image1 + split + R.drawable.image2 + split + R.drawable.image3 + split + R.drawable.image4 + split + R.drawable.image5;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return new Product(1,
-                    "Product 1",
-                    15f,
-                    images,
-                    LocalDateTime.now(),
-                    "This is the product\n" +
-                            "you have always wanted",
-                    100,
-                    new Brand(1, "Gucci"),
-                    new Category(1, "Meme"));
+    private Product getProductFromIntent() {
+        Intent intent = getIntent();
+        int productId = intent.getIntExtra("productId", 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            product = ((GlobalVariables) this.getApplication()).getProducts().stream().filter(p -> p.getProductId() == productId).findAny().orElse(product = null);
         }
-        return null;
+        return product;
     }
 }

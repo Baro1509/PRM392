@@ -1,13 +1,17 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.model.Product;
+import com.example.myapplication.product.ProductActivity;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +46,14 @@ public class ProductListViewAdapter extends RecyclerView.Adapter<ProductListView
         holder.img.setImageResource(R.drawable.chair);
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getPrice().toString());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ProductActivity.class);
+                intent.putExtra("productId", product.getProductId());
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -62,6 +74,14 @@ public class ProductListViewAdapter extends RecyclerView.Adapter<ProductListView
             img = itemView.findViewById(R.id.itemImage);
             productName = itemView.findViewById(R.id.itemName);
             productPrice = itemView.findViewById(R.id.itemPrice);
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    Toast.makeText(itemView.getContext(), "CLick", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent();
+//                }
+//            });
         }
     }
 }
