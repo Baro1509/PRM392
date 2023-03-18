@@ -55,28 +55,28 @@
         android:padding="10dp">
 
         <Button
-            android:id="@+id/phoneBtn"
+            android:id="@+id/allBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:text="Phone" />
+            android:text="@string/all_products" />
 
         <Button
-            android:id="@+id/laptopBtn"
+            android:id="@+id/samsungBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:text="Laptop" />
+            android:text="@string/Samsung" />
 
         <Button
-            android:id="@+id/furniBtn"
+            android:id="@+id/xiaomiBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:text="Furniture" />
+            android:text="@string/Xiaomi" />
     </LinearLayout>
 
 

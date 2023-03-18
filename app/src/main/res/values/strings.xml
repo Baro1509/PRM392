@@ -20,4 +20,9 @@
     <!--    Message-->
     <string name="empty_order_history">You have not purchased anything</string>
     <string name="empty_order_history_suggestion">Maybe try buying something</string>
+
+<!--    Button-->
+    <string name="all_products">All</string>
+    <string name="Samsung">Samsung</string>
+    <string name="Xiaomi">Xiaomi</string>
 </resources>
