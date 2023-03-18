@@ -130,9 +130,12 @@ public class HomePage extends AppCompatActivity {
             product.setModelYear(LocalDateTime.now());
         }
         product.setImages(String.valueOf(R.drawable.chair));
-//        product.setBrand(new Brand(1, "Cong thai hoc"));
-//        product.setCategory(new Category(1, "Furniture"));
         product.setBrand(((GlobalVariables) this.getApplication()).getBrands().get(new Random().nextInt(((GlobalVariables) this.getApplication()).getBrands().size())));
         product.setCategory(((GlobalVariables) this.getApplication()).getCategories().get(new Random().nextInt(((GlobalVariables) this.getApplication()).getCategories().size())));
+        if (product.getBrand().getBrandName().equals("Samsung")) {
+            product.setStore(((GlobalVariables) this.getApplication()).getStores().get(0));
+        } else {
+            product.setStore(((GlobalVariables) this.getApplication()).getStores().get(1));
+        }
     }
 }

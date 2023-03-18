@@ -6,9 +6,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.myapplication.GlobalVariables;
 import com.example.myapplication.R;
+import com.example.myapplication.ShopProfileActivity;
+import com.example.myapplication.ViewCart;
 import com.example.myapplication.model.Brand;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
@@ -18,13 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
-
     List<Integer> listImages;
     Product product;
 
     ViewPager2 productImageContainer;
     ProductImageAdapter productImageAdapter;
 
+    TextView productName, productPrice, productModelYear, stock, brand, category, description, storeName, storeProducts, storeState;
+    ImageView storeImage, back, cart;
+
+    View store;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +43,12 @@ public class ProductActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setupComponent();
-        setupUI();
-        setupProductImageContainer();
+        if (product != null) {
+            setupUI();
+            setupOnclick();
+            setupProductImageContainer();
+            updateUI();
+        }
     }
 
     private void setupComponent() {
@@ -50,6 +62,36 @@ public class ProductActivity extends AppCompatActivity {
         productImageContainer = (ViewPager2) findViewById(R.id.productImageContainer);
         productImageAdapter = new ProductImageAdapter(ProductActivity.this, product.getImages());
         productImageContainer.setAdapter(productImageAdapter);
+
+        productName = (TextView) findViewById(R.id.detailProductName);
+        productPrice = (TextView) findViewById(R.id.detailProductPrice);
+        productModelYear = (TextView) findViewById(R.id.detailProductModelYear);
+        stock = (TextView) findViewById(R.id.detailProductStock);
+        brand = (TextView) findViewById(R.id.detailProductBrand);
+        category = (TextView) findViewById(R.id.detailProductCategory);
+        description = (TextView) findViewById(R.id.detailProductDescription);
+        storeName = (TextView) findViewById(R.id.detailProductStoreName);
+        storeProducts = (TextView) findViewById(R.id.detailProductStoreProducts);
+        storeState = (TextView) findViewById(R.id.detailProductStoreState);
+
+        storeImage = (ImageView) findViewById(R.id.detailProductStoreImage);
+        back = (ImageView) findViewById(R.id.detailProductBackIcon);
+        cart = (ImageView) findViewById(R.id.detailProductCartIcon);
+
+        store = findViewById(R.id.detailProductStore);
+    }
+
+    private void setupOnclick() {
+        back.setOnClickListener(view -> finish());
+        cart.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ViewCart.class);
+            startActivity(intent);
+        });
+        store.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ShopProfileActivity.class);
+            intent.putExtra("storeId", product.getStore().getStoreId());
+            startActivity(intent);
+        });
     }
 
     private void setupProductImageContainer() {
@@ -69,6 +111,22 @@ public class ProductActivity extends AppCompatActivity {
                 super.onPageScrollStateChanged(state);
             }
         });
+    }
+
+    private void updateUI() {
+        productName.setText(product.getProductName());
+        productPrice.setText(product.getPrice().toString() + " USD");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            productModelYear.setText(String.valueOf(product.getModelYear().getYear()));
+        }
+        stock.setText(product.getStock().toString());
+        brand.setText(product.getBrand().getBrandName());
+        category.setText(product.getCategory().getCategoryName());
+        description.setText(product.getDescription());
+        storeName.setText(product.getStore().getStoreName());
+        storeProducts.setText(product.getStore().getStoreProducts().toString() + " products");
+        storeState.setText(product.getStore().getStoreState());
+        storeImage.setImageResource(product.getStore().getStoreImage());
     }
 
     private Product getProductFromIntent() {

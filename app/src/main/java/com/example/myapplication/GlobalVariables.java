@@ -111,21 +111,18 @@ public class GlobalVariables extends Application {
     }
 
     private void setupCategories() {
-        categories.add(new Category(1, "Chair"));
-        categories.add(new Category(2, "Phone"));
-        categories.add(new Category(3, "Table"));
-        categories.add(new Category(4, "Speaker"));
-        categories.add(new Category(5, "Laptop"));
-        categories.add(new Category(6, "Mouse"));
-        categories.add(new Category(7, "Keyboard"));
+        categories.add(new Category(1, "Electronic"));
+        categories.add(new Category(2, "Furniture"));
+        categories.add(new Category(3, "Clothes"));
+        categories.add(new Category(4, "International"));
     }
 
     private void setupStore() {
         stores.add(new Store(1, "Samsung Official Store VN",
                 "0808987654", "samsung@store.vn",
-                "1 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456"));
+                "1 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456", R.drawable.samsung, 1000));
         stores.add(new Store(2, "Xiaomi Off.",
                 "0902020202", "xiaomi@store.vn",
-                "2 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456"));
+                "2 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456", R.drawable.xiaomi, 2000));
     }
 }

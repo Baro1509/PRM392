@@ -100,6 +100,7 @@
                 android:textSize="16sp" />
 
             <include
+                android:id="@+id/detailProductStore"
                 layout="@layout/product_store_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
