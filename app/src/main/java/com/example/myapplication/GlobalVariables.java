@@ -107,9 +107,7 @@ public class GlobalVariables extends Application {
 
     private void setupBrands() {
         brands.add(new Brand(1, "Samsung"));
-        brands.add(new Brand(2, "Huawei"));
-        brands.add(new Brand(3, "Xiaomi"));
-        brands.add(new Brand(4, "Nike"));
+        brands.add(new Brand(2, "Xiaomi"));
     }
 
     private void setupCategories() {
