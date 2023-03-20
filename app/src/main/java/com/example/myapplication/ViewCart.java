@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.model.Cart;
 
@@ -43,6 +44,7 @@ public class ViewCart extends AppCompatActivity {
             cart.updateDetails();
             ((GlobalVariables) getApplication()).setCart(cart);
             updateView();
+            Toast.makeText(this, "Checkout successfully", Toast.LENGTH_SHORT).show();
         });
     }
 
