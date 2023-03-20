@@ -70,7 +70,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                     images,
                     10f,
                     10,
-                    new Store(1, store, "Phone", "Email", "Street", "City", "State", "123456")));
+                    new Store(1, store, "Phone", "Email", "Street", "City", "State", "123456", R.drawable.samsung, 1000)));
         }
         filterOrderItem();
         OrderDetailListAdapter adapter = new OrderDetailListAdapter(OrderDetailActivity.this, list);

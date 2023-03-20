@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Application;
 
 import com.example.myapplication.model.Brand;
+import com.example.myapplication.model.CartProduct;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.Category;

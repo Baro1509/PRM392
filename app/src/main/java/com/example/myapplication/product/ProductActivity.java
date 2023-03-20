@@ -7,20 +7,25 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.GlobalVariables;
 import com.example.myapplication.R;
 import com.example.myapplication.ShopProfileActivity;
 import com.example.myapplication.ViewCart;
 import com.example.myapplication.model.Brand;
+import com.example.myapplication.model.CartProduct;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductActivity extends AppCompatActivity {
     List<Integer> listImages;
@@ -31,6 +36,7 @@ public class ProductActivity extends AppCompatActivity {
 
     TextView productName, productPrice, productModelYear, stock, brand, category, description, storeName, storeProducts, storeState;
     ImageView storeImage, back, cart;
+    Button addToCart;
 
     View store;
     @Override
@@ -78,6 +84,8 @@ public class ProductActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.detailProductBackIcon);
         cart = (ImageView) findViewById(R.id.detailProductCartIcon);
 
+        addToCart = (Button) findViewById(R.id.productAddToCart);
+
         store = findViewById(R.id.detailProductStore);
     }
 
@@ -91,6 +99,18 @@ public class ProductActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ShopProfileActivity.class);
             intent.putExtra("storeId", product.getStore().getStoreId());
             startActivity(intent);
+        });
+        addToCart.setOnClickListener(view -> {
+            Integer image=0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                image = Arrays.stream(product.getImages().split("_"))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList()).get(0);
+            }
+            CartProduct cartProduct = new CartProduct(product.getProductId(),
+                    product.getProductName(), product.getPrice(), 1, product.getStore(), image);
+            ((GlobalVariables) this.getApplication()).getCart().addToCart(cartProduct);
+            Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -11,6 +11,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.model.Brand;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
+import com.example.myapplication.model.Store;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +54,10 @@ public class CheckoutActivity extends AppCompatActivity {
                             "you have always wanted",
                     100,
                     new Brand(1, "Gucci"),
-                    new Category(1, "Meme"));
+                    new Category(1, "Meme"),
+                    new Store(1, "Samsung Official Store VN",
+                            "0808987654", "samsung@store.vn",
+                            "1 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456", R.drawable.samsung, 1000));
             for (int i = 0; i < 10; i++) {
                 list.add(product);
             }

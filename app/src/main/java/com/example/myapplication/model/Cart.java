@@ -1,10 +1,12 @@
 package com.example.myapplication.model;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cart implements Parcelable {
     private List<CartProduct> list;
@@ -87,5 +89,27 @@ public class Cart implements Parcelable {
 
     public void setTotalProducts(Integer totalProducts) {
         this.totalProducts = totalProducts;
+    }
+
+    public void updateDetails() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            totalProducts = list.stream().collect(Collectors.summingInt(CartProduct::getAmount));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            totalPrice = list.stream().map(p -> p.totalPrice()).reduce(0f, Float::sum);
+        }
+    }
+
+    public void addToCart(CartProduct product) {
+        CartProduct productInCart = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            productInCart = list.stream().filter(p -> p.getCartProductId() == product.getCartProductId()).findAny().orElse(productInCart=null);
+        }
+        if (productInCart == null) {
+            list.add(product);
+            return;
+        }
+        productInCart.setAmount(productInCart.getAmount() + 1);
+        updateDetails();
     }
 }
