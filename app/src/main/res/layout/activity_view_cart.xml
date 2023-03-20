@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ViewCart">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:id="@+id/cart_list">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -28,15 +29,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_product"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="400dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <RelativeLayout
+                android:id="@+id/total_container"
+                android:layout_below="@id/rcv_product"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16sp"
                 android:layout_marginEnd="16sp"
@@ -133,24 +136,29 @@
             </RelativeLayout>
 
             <TextView
+                android:layout_below="@id/total_container"
                 android:id="@+id/checkout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="CheckOut"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="#FF5F00"
-                android:layout_margin="16dp"
                 android:gravity="center"
+                android:text="CheckOut"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
 
-        </LinearLayout>
-    </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_alignParentBottom="true">
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
