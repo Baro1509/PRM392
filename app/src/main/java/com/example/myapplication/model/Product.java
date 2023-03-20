@@ -23,8 +23,9 @@ public class Product implements Parcelable {
     private Integer stock;
     private Brand brand;
     private Category category;
+    private Store store;
 
-    public Product(Integer productId, String productName, Float price, String images, LocalDateTime modelYear, String description, Integer stock, Brand brand, Category category) {
+    public Product(Integer productId, String productName, Float price, String images, LocalDateTime modelYear, String description, Integer stock, Brand brand, Category category, Store store) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -34,6 +35,13 @@ public class Product implements Parcelable {
         this.stock = stock;
         this.brand = brand;
         this.category = category;
+        this.store = store;
+    }
+
+    public Product(String images, String productName, Float price) {
+        this.productName = productName;
+        this.price = price;
+        this.images = images;
     }
 
     protected Product(Parcel in) {
@@ -57,44 +65,7 @@ public class Product implements Parcelable {
         }
         brand = in.readParcelable(Brand.class.getClassLoader());
         category = in.readParcelable(Category.class.getClassLoader());
-    }
-
-    public Product(String images, String productName, float price) {
-        this.images = images;
-        this.productName = productName;
-        this.price = price;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (productId == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(productId);
-        }
-        dest.writeString(productName);
-        if (price == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeFloat(price);
-        }
-        dest.writeString(images);
-        dest.writeString(description);
-        if (stock == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(stock);
-        }
-        dest.writeParcelable(brand, flags);
-        dest.writeParcelable(category, flags);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        store = in.readParcelable(Store.class.getClassLoader());
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -179,5 +150,46 @@ public class Product implements Parcelable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (productId == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(productId);
+        }
+        parcel.writeString(productName);
+        if (price == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeFloat(price);
+        }
+        parcel.writeString(images);
+        parcel.writeString(description);
+        if (stock == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(stock);
+        }
+        parcel.writeParcelable(brand, i);
+        parcel.writeParcelable(category, i);
+        parcel.writeParcelable(store, i);
     }
 }

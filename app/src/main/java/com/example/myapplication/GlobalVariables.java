@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Application;
 
 import com.example.myapplication.model.Brand;
+import com.example.myapplication.model.CartProduct;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.Category;
@@ -32,7 +33,7 @@ public class GlobalVariables extends Application {
         orderItems = new ArrayList<>();
         stores = new ArrayList<>();
         cart = new Cart();
-        customer = new Customer();
+        customer = null;
     }
 
     public List<Product> getProducts() {
@@ -97,5 +98,32 @@ public class GlobalVariables extends Application {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void setupData() {
+        setupBrands();
+        setupCategories();
+        setupStore();
+    }
+
+    private void setupBrands() {
+        brands.add(new Brand(1, "Samsung"));
+        brands.add(new Brand(2, "Xiaomi"));
+    }
+
+    private void setupCategories() {
+        categories.add(new Category(1, "Electronic"));
+        categories.add(new Category(2, "Furniture"));
+        categories.add(new Category(3, "Clothes"));
+        categories.add(new Category(4, "International"));
+    }
+
+    private void setupStore() {
+        stores.add(new Store(1, "Samsung Official Store VN",
+                "0808987654", "samsung@store.vn",
+                "1 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456", R.drawable.samsung, 1000));
+        stores.add(new Store(2, "Xiaomi Off.",
+                "0902020202", "xiaomi@store.vn",
+                "2 Pham Van Dong", "Tan Binh", "Ho Chi Minh", "123456", R.drawable.xiaomi, 2000));
     }
 }
